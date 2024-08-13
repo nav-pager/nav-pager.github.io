@@ -79,7 +79,7 @@ customElements.define('nav-pager', class extends HTMLElement {
                     textContent: ":host{display:block}" +
                         ":host{margin:5px 10px;user-select:none;-webkit-user-select:none;font-family:sans-serif}" +
                         "span{cursor:pointer;border:1px solid #ccc;padding:5px;display:inline-block}" +
-                        "span[selected]{font-weight:bold;color:red}" +
+                        "span[selected]{font-weight:bold;color:yellow;background:green!important}" +
                         "::slotted(*){display:block;background:var(--bgcolor,pink)}"
                     // note: there are VSCODE plugins that can syntax highlight the above strings...
                 }),
