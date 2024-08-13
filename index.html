@@ -50,12 +50,27 @@
             </nav-pager>
             <code>
 <pre>
-    &lt;nav-pager pagelabel="Paginas: ">
+    &lt;nav-pager id="PAGER_TWO" pagelabel="Paginas: ">
         &lt;nav title="Foo">Page 1&lt;/nav>
         &lt;nav title="Bar" selected>Page 2&lt;/nav>
         &lt;nav title="Baz">Page 3&lt;/nav>
     &lt;/nav-pager>
+&lt;style>
+#PAGER_TWO {
+/* style parts IN shadowDOM */
+
+&::part(pagenr) {
+background: lightblue;
+}
+
+&::part(selectorbottom) {
+display: none;
+}
+}
+
+&lt;/style>
 </pre>
+
             </code>
 
             <nav-pager id="PAGER_TWO" pagelabel="Paginas: ">
@@ -88,6 +103,16 @@
     */
                     background: gold;
                     margin: 2px;
+                }
+
+                #PAGER_TWO {
+                    &::part(pagenr) {
+                        background: lightblue;
+                    }
+
+                    &::part(selectorbottom) {
+                        display: none;
+                    }
                 }
             </style>
         </section>

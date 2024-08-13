@@ -36,29 +36,36 @@ customElements.define('nav-pager', class extends HTMLElement {
     }
 
     render(
-    // Functions as parameter so we don't need "const " statements bloating our GZip file, also keeps function body clean
+        // Functions as parameter so we don't need "const " statements bloating our GZip file, also keeps function body clean
 
         // THE Helper Function you want to use in every Web Component (well, okay, maybe not every)
         createElement = (tag, props = {}) => Object.assign(document.createElement(tag), props),
 
-        createPageSelector = () => this.navElements.map((nav, idx) => {
-            let span = createElement("span", {
-                textContent: nav.title || ++idx, // use .title or new page number
-                part: "pagenr", // allow styling from Global CSS, what many blogs whine about
-                onclick: evt => this.select(nav) // no need for addEventListener, there is only one onclick PER span
-                // No removeListener required (in a disconnectedCallback), handler is garbage collected when the <span> is removed
-            }); // createElement <span>
+        createPageSelector = (id, div) => {
+            div = createElement("div", {
+                part: "selector" + id // allow styling from Global CSS, what many blogs whine about
+            }); // create <div> for all <span> pagenumbers
+            div.append( // or you can add append to the Helper function above, but this WC only does it once
+                this.getAttribute("pagelabel") || "Page: ", // prefix for pagenumbers
+                ...this.navElements.map((nav, idx) => { // spread all <span> elements
+                    let span = createElement("span", {
+                        textContent: nav.title || ++idx, // use .title or new page number
+                        part: "pagenr", // allow styling from Global CSS, what many blogs whine about
+                        onclick: evt => this.select(nav) // no need for addEventListener, there is only one onclick PER span
+                        // No removeListener required (in a disconnectedCallback), handler is garbage collected when the <span> is removed
+                    }); // createElement <span>
 
-            this.spanElements.push(span); // store all <span> on <nav-pager>
-            (nav.spanElements = nav.spanElements || []).push(span); // store all <span> on matching <nav>
+                    this.spanElements.push(span); // store all <span> on <nav-pager>
+                    (nav.spanElements = nav.spanElements || []).push(span); // store all <span> on matching <nav>
 
-            return span; // return all <span> as Array
-        }) // createPageSelector() returns Array of <span>
-
+                    return span; // return all <span> as Array
+                })
+            );
+            return div; // return the <div> with all <span>
+        } // createPageSelector
     ) {
         this.render = () => { } // render once! because connectedCallback will be called on DOM mutations (like drag/drop)
 
-        this.pagelabel = this.getAttribute("pagelabel") || "Page: "; // default prefix for pagenumbers
         this.spanElements = []; // keep record of all <span> pagenumbers/titles
 
         this /* don't blindly copy MDN code, chain those statements, yes! super() can be chained too */
@@ -76,10 +83,10 @@ customElements.define('nav-pager', class extends HTMLElement {
                         "::slotted(*){display:block;background:var(--bgcolor,pink)}"
                     // note: there are VSCODE plugins that can syntax highlight the above strings...
                 }),
-                this.pagelabel, ...createPageSelector(), // spread all <span>
+                createPageSelector("top"), // <div> with <span>
                 this.pageslot = createElement("slot"), // for manual slot assignment. ONE <nav> will be _reflected_ here
                 // note: You can't use this.slot because that IS a default property on HTMLElement
-                this.pagelabel, ...createPageSelector(), // spread all <span>
+                createPageSelector("bottom"),
             ); // append
 
         this.select(); // initial display of a page
