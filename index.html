@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>&lt;nav-pager>Web Component</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="&lt;nav-pager> Web Component with ShadowDOM, CSS variables, slots, and ::part">
+    <script src="element.js"></script>
+    <script src="//file-size.github.io/element.js" type="module"></script>
+    <style>
+        body {
+            font: 120% Arial, sans-serif;
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <h1>&lt;nav-pager> Web Component</h1>
+        <p>Web Component source-code documentation in this page source</p>
+        <p>UNLicensed source-code on <a href="https://github.com/nav-pager/nav-pager.github.io">GitHub</a></p>
+    </section>
+    <section>
+        <code>
+<pre>
+    &lt;nav-pager>
+        &lt;nav>Page 1&lt;/nav>
+        &lt;nav>Page 2&lt;/nav>
+        &lt;nav>Page 3&lt;/nav>
+        &lt;nav>Page 4&lt;/nav>
+        &lt;nav>Page 5&lt;/nav>
+    &lt;/nav-pager>
+</pre>
+        </code>
+
+        <section>
+            <nav-pager id="PAGER_ONE">
+                <nav>Page 1</nav>
+                <nav>Page 2</nav>
+                <nav>Page 3</nav>
+                <nav>Page 4</nav>
+                <nav>Page 5</nav>
+            </nav-pager>
+            <code>
+<pre>
+    &lt;nav-pager pagelabel="Paginas: ">
+        &lt;nav title="Foo">Page 1&lt;/nav>
+        &lt;nav title="Bar" selected>Page 2&lt;/nav>
+        &lt;nav title="Baz">Page 3&lt;/nav>
+    &lt;/nav-pager>
+</pre>
+            </code>
+
+            <nav-pager id="PAGER_TWO" pagelabel="Paginas: ">
+                <nav title="Foo">Page 1</nav>
+                <nav title="Bar" selected>Page 2</nav>
+                <nav title="Baz">Page 3</nav>
+            </nav-pager>
+
+            <style>
+                nav-pager {
+                    /* CSS variables trickle into shadowDOM */
+                    --bgcolor: beige;
+                    /* INHERITABLE styles style shadowDOM */
+                    color: darkblue;
+                    /* global CSS here will overrule CSS inside :host (has no Specificity) */
+                    margin: 2em 1em;
+                }
+
+                nav {
+                    /* The <nav> are not visible in LIGHTDOM, only ONE is *reflected* to the <slot> in shadowDOM
+            But ALL <nav> styling can be done here, with Global CSS
+                */
+                    font: bold 250% sans-serif;
+                    padding: 15px 10px;
+                }
+
+                nav-pager::part(pagenr) {
+                    /* YES! Do not believe what some blogs whine about. Global CSS CAN style shadowDOM!
+    Its just that the Component AUTHOR has to provide all the ::part hooks (on every DOM element)
+    */
+                    background: gold;
+                    margin: 2px;
+                }
+            </style>
+        </section>
+
+        <hr>
+        <section>
+            <h3>
+                (my) in depth blogs and explanations:
+            </h3>
+            <ul>
+                <li><a
+                        href="https://dev.to/dannyengelman/web-component-102-the-5-lessons-after-learning-web-components-101-h9p">5
+                        more lessons after Web Components #101 (Dev.to)</a></li>
+                <li><a
+                        href="https://dev.to/dannyengelman/web-component-developers-do-not-connect-with-the-connectedcallback-yet-4jo7">WTF
+                        does the connectedCallback do? (Dev.to)</a></li>
+                <li><a
+                        href="https://stackoverflow.com/questions/61626493/slotted-css-selector-for-nested-children-in-shadowdom-slot/61631668#61631668">::slotted
+                        (StackOverflow)</a></li>
+            </ul>
+        </section>
+        <section id="filesize">
+            <h1><code class="title">&lt;nav-pages></code> minified GZIP Filesize is <i>small</i></h1>
+            <file-size gz src="https://nav-pager.github.io/element.min.js"></file-size>
+        </section>
+
+</body>
+
+</html>

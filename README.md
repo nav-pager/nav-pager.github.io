@@ -1,2 +1,3 @@
-# nav-pager.github.io
-&lt;nav-pager> Web Component
+# &lt;nav-pager> Web Component
+
+## Live: https://nav-pager.github.io
