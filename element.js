@@ -35,16 +35,13 @@ customElements.define('nav-pager', class extends HTMLElement {
         setTimeout(() => this.render()); // wait till <nav-pager> innerHTML is parsed. See link
     }
 
-    render() {
-        this.render = () => { } // render once! because connectedCallback will be called on DOM mutations (like drag/drop)
-
-        this.pagelabel = this.getAttribute("pagelabel") || "Page: "; // default prefix for pagenumbers
-        this.spanElements = []; // keep record of all <span> pagenumbers/titles
+    render(
+    // Functions as parameter so we don't need "const " statements bloating our GZip file, also keeps function body clean
 
         // THE Helper Function you want to use in every Web Component (well, okay, maybe not every)
-        const createElement = (tag, props = {}) => Object.assign(document.createElement(tag), props);
+        createElement = (tag, props = {}) => Object.assign(document.createElement(tag), props),
 
-        const createPageSelector = () => this.navElements.map((nav, idx) => {
+        createPageSelector = () => this.navElements.map((nav, idx) => {
             let span = createElement("span", {
                 textContent: nav.title || ++idx, // use .title or new page number
                 part: "pagenr", // allow styling from Global CSS, what many blogs whine about
@@ -56,7 +53,13 @@ customElements.define('nav-pager', class extends HTMLElement {
             (nav.spanElements = nav.spanElements || []).push(span); // store all <span> on matching <nav>
 
             return span; // return all <span> as Array
-        }); // createPageSelector() returns Array of <span>
+        }) // createPageSelector() returns Array of <span>
+
+    ) {
+        this.render = () => { } // render once! because connectedCallback will be called on DOM mutations (like drag/drop)
+
+        this.pagelabel = this.getAttribute("pagelabel") || "Page: "; // default prefix for pagenumbers
+        this.spanElements = []; // keep record of all <span> pagenumbers/titles
 
         this /* don't blindly copy MDN code, chain those statements, yes! super() can be chained too */
             .attachShadow({
