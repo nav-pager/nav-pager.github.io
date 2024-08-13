@@ -15,10 +15,12 @@ customElements.define('nav-pager', class extends HTMLElement {
         [...this.spanElements, ...this.navElements].map(el => {
             el.removeAttribute("selected");
             el.removeAttribute("aria-current"); // they are not on <span> but on <nav> We'll fix that later
+            if (el.localName == "span") el.part = "pagenr"; // expose parts to Global CSS
         });
         // set selected on <span> page numbers and this <nav>
         [...nav.spanElements, nav].map(el => {
-            el.setAttribute("selected", true)
+            el.setAttribute("selected", true);
+            if (el.localName == "span") el.part = "pagenr pagenrselected"; // expose parts to Global CSS
         });
         nav.setAttribute("aria-current", "page");
 
@@ -79,7 +81,7 @@ customElements.define('nav-pager', class extends HTMLElement {
                     textContent: ":host{display:block}" +
                         ":host{margin:5px 10px;user-select:none;-webkit-user-select:none;font-family:sans-serif}" +
                         "span{cursor:pointer;border:1px solid #ccc;padding:5px;display:inline-block}" +
-                        "span[selected]{font-weight:bold;color:yellow;background:green!important}" +
+                        "span[selected]{font-weight:bold;color:red}" +
                         "::slotted(*){display:block;background:var(--bgcolor,pink)}"
                     // note: there are VSCODE plugins that can syntax highlight the above strings...
                 }),

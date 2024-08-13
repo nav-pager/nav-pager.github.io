@@ -13,7 +13,7 @@
             font: 120% Arial, sans-serif;
             background: #f0f0f0;
             margin: 0 auto;
-            max-width: 1280px;
+            max-width: 1024px;
         }
     </style>
 </head>
@@ -24,6 +24,7 @@
         <p>UNLicensed source-code on <a href="https://github.com/nav-pager/nav-pager.github.io">GitHub</a></p>
     </section>
     <section>
+        <h2>&lt;nav-pager id="PAGER_ONE"></h2>
         <code>
 <pre>
     LOAD:
@@ -48,26 +49,31 @@
                 <nav>Page 4</nav>
                 <nav>Page 5</nav>
             </nav-pager>
+<h2>&lt;nav-pager id="PAGER_TWO"></h2>
             <code>
 <pre>
-    &lt;nav-pager id="PAGER_TWO" pagelabel="Paginas: ">
-        &lt;nav title="Foo">Page 1&lt;/nav>
-        &lt;nav title="Bar" selected>Page 2&lt;/nav>
-        &lt;nav title="Baz">Page 3&lt;/nav>
-    &lt;/nav-pager>
+&lt;nav-pager id="PAGER_TWO" pagelabel="Paginas: ">
+&lt;nav title="Foo">Page 1&lt;/nav>
+&lt;nav title="Bar" selected>Page 2&lt;/nav>
+&lt;nav title="Baz">Page 3&lt;/nav>
+&lt;/nav-pager>
+
 &lt;style>
-#PAGER_TWO {
 /* style parts IN shadowDOM */
-
-  &::part(pagenr) {
-    background: lightblue;
-  }
-
-  &::part(selectorbottom) {
+#PAGER_TWO {
+&::part(pagenr) {
+background: lightblue;
+        opacity: 0.5;
+    }
+    &::part(pagenrselected) {
+    opacity: 1;
+    background: green;
+    color: white;
+    }
+    &::part(selectorbottom) {
     display: none;
-  }
-}
-
+    }
+    }
 &lt;/style>
 </pre>
 
@@ -108,8 +114,14 @@
                 #PAGER_TWO {
                     &::part(pagenr) {
                         background: lightblue;
+                        opacity: 0.5;
                     }
-
+                    
+                    &::part(pagenrselected) {
+                        opacity: 1;
+                        background: green;
+                        color: white;
+                    }
                     &::part(selectorbottom) {
                         display: none;
                     }
